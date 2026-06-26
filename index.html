@@ -4,14 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Do You Love Me?</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* পুরো পেজের স্টাইল */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6; /* হালকা মিষ্টি গোলাপি ব্যাকগ্রাউন্ড */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* মেইন বক্সের স্টাইল */
+        .question-container, .result-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 320px;
+            transition: all 0.3s ease;
+        }
+
+        /* ছবির সাইজ */
+        img {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        /* লেখার কালার */
+        h2 {
+            color: #ff4d6d;
+            font-size: 26px;
+            margin: 20px 0;
+        }
+
+        /* বাটনের বক্স */
+        .button-container {
+            position: relative;
+            height: 60px;
+            margin-top: 30px;
+        }
+
+        /* সাধারণ বাটন স্টাইল */
+        button {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Yes বাটনের স্টাইল */
+        .yes-btn {
+            background-color: #ff4d6d;
+            color: white;
+            position: absolute;
+            left: 30px;
+        }
+
+        .yes-btn:hover {
+            background-color: #ff758f;
+            transform: scale(1.05);
+        }
+
+        /* No বাটনের স্টাইল */
+        .no-btn {
+            background-color: #f0f0f0;
+            color: #333;
+            position: absolute;
+            right: 30px;
+            z-index: 999;
+            transition: left 0.1s ease, top 0.1s ease;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- প্রশ্ন করার মেইন বক্স -->
+    <!-- প্রথম বক্স: প্রশ্ন জিজ্ঞেস করার অংশ -->
     <div class="question-container" id="questionBox">
-        <img class="load-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9scXN6MDZsZG1nd3VwZWF5NXY4Ym9pZnd0cmY5dHZiZ2p4N2p1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3R4PWcmbXQ9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear">
-        <h2 class="question">Do you love me? ❤️</h2>
+        <!-- এখানে ইন্টারনেটের কিউট বিড়ালের GIF দেওয়া হয়েছে যা সবসময় লোড হবে -->
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9scXN6MDZsZG1nd3VwZWF5NXY4Ym9pZnd0cmY5dHZiZ2p4N2p1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3R4PWcmbXQ9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cat">
+        <h2>Do you love me? ❤️</h2>
         
         <div class="button-container">
             <button class="yes-btn" id="yesBtn">Yes</button>
@@ -19,31 +99,37 @@
         </div>
     </div>
 
-    <!-- "Yes" বাটনে চাপ দিলে যা আসবে -->
+    <!-- দ্বিতীয় বক্স: "Yes" এ ক্লিক করার পর যা দেখাবে -->
     <div class="result-container" id="resultBox" style="display: none;">
-        <img class="gif-result" src="https://media.giphy.com/media/KztT2c4u8mYYUiBtEE/giphy.gif" alt="Happy Bear">
+        <img src="https://media.giphy.com/media/KztT2c4u8mYYUiBtEE/giphy.gif" alt="Happy Cat">
         <h2>I knew it! 🥰</h2>
     </div>
 
+    <!-- বাটন নাচানোর ম্যাজিক কোড -->
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const questionBox = document.getElementById('questionBox');
         const resultBox = document.getElementById('resultBox');
 
+        // বাটনটিকে স্ক্রিনের যেকোনো জায়গায় সরানোর ফাংশন
         function moveButton() {
-            const x = Math.random() * (window.innerWidth - 150);
+            // স্ক্রিনের চওড়া ও লম্বা মাপ অনুযায়ী বাটন লাফাবে যেন বাইরে না যায়
+            const x = Math.random() * (window.innerWidth - 160);
             const y = Math.random() * (window.innerHeight - 100);
+            
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
+        // কম্পিউটার মাউস এবং মোবাইল টাচ দুটোর জন্যই বাটন পালাবে
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // মোবাইলের স্ক্রিন স্ক্রোল হওয়া আটকাবে
             moveButton();
         });
 
+        // "Yes" চাপলে সারপ্রাইজ দেখাবে
         yesBtn.addEventListener('click', () => {
             questionBox.style.display = 'none';
             resultBox.style.display = 'block';
